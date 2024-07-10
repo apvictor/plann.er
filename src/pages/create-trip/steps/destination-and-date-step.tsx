@@ -32,6 +32,7 @@ export function DestinationAndDateStep({
       </div>
 
       <div className="w-px h-6 bg-zinc-800" />
+
       {isGuestsInputOpen ? (
         <button
           onClick={closeGuestsInput}
