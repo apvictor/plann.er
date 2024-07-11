@@ -65,16 +65,16 @@ export function CreateTripPage() {
     setEmailsToInvite(newEmailList);
   }
 
-  function createTrip(event: FormEvent<HTMLFormElement>) {
+  async function createTrip(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     if (!eventStartAndEndDates?.from || !eventStartAndEndDates.to) return;
 
     if (emailsToInvite.length == 0) return;
 
-    if (ownerName || ownerEmail) return;
+    if (!ownerName || !ownerEmail) return;
 
-    api.post("/trips", {
+    const response = await api.post("/trips", {
       destination,
       starts_at: eventStartAndEndDates.from,
       ends_at: eventStartAndEndDates.to,
@@ -83,7 +83,9 @@ export function CreateTripPage() {
       owner_email: ownerEmail,
     });
 
-    // navigate("/trips/123");
+    const { tripId } = response.data;
+
+    navigate(`/trips/${tripId}`);
   }
 
   return (
